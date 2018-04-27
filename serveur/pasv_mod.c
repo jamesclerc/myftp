@@ -38,7 +38,6 @@ int pasv_mod(t_client *clt, struct protoent *pr_e)
 	clt->fd_mod = socket(AF_INET, SOCK_STREAM, pr_e->p_proto);
 	if (clt->fd_mod == -1)
 		return (1);
-	dprintf(clt->fd, "1\n");
 	return (init_passv(clt, &sock_in));
 }
 
@@ -46,9 +45,9 @@ void print_pasv(char **tab, t_client *clt)
 {
 	dprintf(clt->fd, "227 Entering Passive Mode (");
 	for (int i = 0; tab[i]; i++) {
-		dprintf(clt->fd, "%s, ", tab[i]);
+		dprintf(clt->fd, "%s,", tab[i]);
 	}
-	dprintf(clt->fd, "%d, %d)\n", clt->passv_port / 256, \
+	dprintf(clt->fd, "%d,%d).\n", clt->passv_port / 256, \
 		clt->passv_port % 256);
 	free_tab(tab);
 }

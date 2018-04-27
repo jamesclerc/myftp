@@ -18,13 +18,14 @@ void list_call(t_client *clt)
 	if (fd_new == -1)
 		dprintf(clt->fd, "425 problem with connection.\n");
 	else {
-		file = popen("ls -la", "r");
+		file = popen("ls -l", "r");
 		while (fgets(str, 4096, file))
 			dprintf(fd_new, "%s", str);
 		fclose(file);
 		close(clt->fd_mod);
 		close(fd_new);
 		clt->fd_mod = -1;
+		dprintf(clt->fd, "226 Directory send OK.\n");
 	}
 }
 
@@ -35,8 +36,10 @@ void list(char **tab, t_client *clt)
 	} else {
 		if (clt->passv_mod == 0)
 			dprintf(clt->fd, "425 Use PORT or PASV first.\n");
-		else
+		else {
+			dprintf(clt->fd, "150 Here comes the directory listing.\n");
 			list_call(clt);
+		}
 		(void)tab;
 	}
 }
