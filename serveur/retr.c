@@ -33,7 +33,7 @@ void do_retr(char **tab, t_client *clt)
 {
 	struct sockaddr_in s_in;
 	socklen_t size = sizeof(s_in);
-	int fd_new = (clt->passv_mod = 2) ? clt->fd_mod : \
+	int fd_new = (clt->passv_mod == 2) ? clt->fd_mod : \
 		accept(clt->fd_mod, (struct sockaddr *)&s_in, &size);
 
 	if (fd_new == -1)
