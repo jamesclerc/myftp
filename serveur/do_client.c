@@ -24,7 +24,6 @@ int do_cmd(char **tab, t_client *clt)
 
 	for (int i = 0; func[i] != NULL ; i++){
 		if (strcasecmp(tab[0], func[i]) == 0) {
-			print_tab(tab);
 			function(tab, clt, i);
 			return (0);
 		}
