@@ -13,11 +13,10 @@ char **str_wordtab(char *str, char *tok)
 {
 	int i = 0;
 	char **tab = malloc(sizeof(char *));
-	char *token;
-	
-	if (!str || !tab)
-		return NULL;
-	token = strtok(str, tok);
+	char *token = strtok(str, tok);
+
+	if (!str || !tab || !token)
+		return (NULL);
 	while (1) {
 		tab[i] = strdup(token);
 		i = i + 1;
@@ -35,7 +34,7 @@ char **str_wordtab(char *str, char *tok)
 void print_tab(char **tab)
 {
 	int i = 0;
-	
+
 	while (tab[i]) {
 		printf("%s\n", tab[i]);
 		i++;

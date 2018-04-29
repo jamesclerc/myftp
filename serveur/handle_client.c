@@ -26,21 +26,24 @@ t_client *create_new_client(t_server *server, char *ip)
 	return new;
 }
 
-void free_client(t_client *clt)
+void handle_eve2_client(t_client *clt, char *line)
 {
-	if (close(clt->fd) == -1)
-		exit(84);
-	if (close(clt->fd_mod) == -1)
-		exit(84);
-	free(clt->username);
-	free(clt->password);
-	free(clt);
+	char **tab;
+
+	if (line != NULL) {
+		if (strlen(line) > 0) {
+			tab = str_wordtab(line, "  \t\n\r");
+			(tab != NULL) ? do_client(tab, clt) : \
+				dprintf(clt->fd, "500 Unknow command.\n");
+			(tab != NULL) ? free_tab(tab) : 0;
+		}
+		free(line);
+	}
 }
 
 void handle_eve_client(t_server *server, char *ip)
 {
 	char *line = NULL;
-	char **tab;
 	t_client *clt = create_new_client(server, ip);
 
 	if (!clt)
@@ -48,12 +51,7 @@ void handle_eve_client(t_server *server, char *ip)
 	dprintf(clt->fd, "220 (vsFTPd 3.0.0)\n");
 	while (1) {
 		line = get_next_line(clt->fd);
-		if (line != NULL && strlen(line) > 0) {
-			tab = str_wordtab(line, " \t\n\r");
-			(strlen(line) > 0) ? do_client(tab, clt) : 0;
-                        free_tab(tab);
-                        free(line);
-		}
+		handle_eve2_client(clt, line);
 		if (clt->ret == -1)
 			break;
 	}

@@ -8,8 +8,8 @@
 #ifndef SERVER_H_
 #define SERVER_H_
 
-#include <sys/types.h>
 #include <stdio.h>
+#include <ctype.h>
 #include <sys/socket.h>
 #include <netdb.h>
 #include <stdlib.h>
@@ -19,6 +19,9 @@
 #include <arpa/inet.h>
 #include <sys/wait.h>
 #include <stdbool.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 typedef struct s_server {
 	int fd_srv;
@@ -66,5 +69,16 @@ void noop(char **tab, t_client *clt);
 
 void pasv(char **tab, t_client *clt);
 void list(char **tab, t_client *clt);
+
+void retr(char **tab, t_client *clt);
+void free_client(t_client *clt);
+
+void stor(char **tab, t_client *clt);
+
+char *get_ip(char **tab);
+int check_number(char *str);
+int valid_cmd(char **tab);
+
+void port(char **tab, t_client *clt);
 
 #endif /* !SERVER_H_ */

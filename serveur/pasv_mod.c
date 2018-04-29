@@ -10,17 +10,17 @@
 int init_passv(t_client *clt, struct sockaddr_in *sock_in)
 {
 	socklen_t size = sizeof(sock_in);
-	
+
 	sock_in->sin_port = htons(0);
 	sock_in->sin_family = AF_INET;
 	sock_in->sin_addr.s_addr = INADDR_ANY;
-	if (bind(clt->fd_mod, (const struct sockaddr*)sock_in, \
+	if (bind(clt->fd_mod, (const struct sockaddr *)sock_in, \
 		sizeof(*sock_in)) == -1) {
 		return (1);
 	}
 	if (listen(clt->fd_mod, 1) == -1)
 		return (1);
-	if (getsockname(clt->fd_mod, (struct sockaddr*)sock_in, &size) == -1)
+	if (getsockname(clt->fd_mod, (struct sockaddr *)sock_in, &size) == -1)
 		return (1);
 	clt->passv_port = ntohs(sock_in->sin_port);
 	return (0);
@@ -63,7 +63,7 @@ void pasv(char **tab, t_client *clt)
 		dprintf(clt->fd, "530 Please login with USER and PASS.\n");
 	} else {
 		if (pasv_mod(clt, pr_e) == 1) {
-			dprintf(clt->fd, "Problem in the init.\n");
+			dprintf(clt->fd, "500 Illegal PASV\n");
 		} else {
 			clt->passv_mod = 1;
 			my_ip = strdup(clt->ip);

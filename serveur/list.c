@@ -12,7 +12,8 @@ void list_call(t_client *clt)
 	char str[4096];
 	struct sockaddr_in s_in;
 	socklen_t size = sizeof(s_in);
-	int fd_new = accept(clt->fd_mod, (struct sockaddr *)&s_in, &size);
+	int fd_new = (clt->passv_mod == 2) ? clt->fd_mod : \
+		accept(clt->fd_mod, (struct sockaddr *)&s_in, &size);
 	FILE *file;
 
 	if (fd_new == -1)
@@ -37,7 +38,8 @@ void list(char **tab, t_client *clt)
 		if (clt->passv_mod == 0)
 			dprintf(clt->fd, "425 Use PORT or PASV first.\n");
 		else {
-			dprintf(clt->fd, "150 Here comes the directory listing.\n");
+			dprintf(clt->fd, "150 Here comes the " \
+				"directory listing.\n");
 			list_call(clt);
 		}
 		(void)tab;

@@ -5,7 +5,6 @@
 ** get_next_line
 */
 
-#include "get_next_line.h"
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -15,7 +14,7 @@
 void condition_read(int fd, int *readd, int *taille, char *save)
 {
 	if (*readd <= *taille) {
-		*readd = read(fd, save, READ_SIZE);
+		*readd = read(fd, save, 4);
 		*taille = 0;
 	}
 }
@@ -40,14 +39,14 @@ char end_prog(char *ret, int readd, int *taille, int comp)
 
 char	*get_next_line(const int fd)
 {
-	static char	save[READ_SIZE + 2];
+	static char	save[4 + 2];
 	static int	taille = 1;
 	static int	readd = 1;
 	static int	comp = 0;
 	char	*ret;
 	int	size_of_malloc;
 
-	if (fd == -1 || READ_SIZE <= 0)
+	if (fd == -1 || 4 <= 0)
 		return (NULL);
 	size_of_malloc = 100;
 	comp = 0;

@@ -7,7 +7,7 @@
 
 #include "../include/server.h"
 
-void display_help()
+void display_help(void)
 {
 	printf("Usage: ./server [port] [path]\n");
 }
@@ -41,7 +41,7 @@ int init_server(char *port, char *path, t_server *server)
 	server = get_data_server(server, port, path);
 	if (server == NULL)
 		return (84);
-	if (bind(server->fd_srv, (const struct sockaddr*)&server->sock_in,
+	if (bind(server->fd_srv, (const struct sockaddr *)&server->sock_in,
 		sizeof(server->sock_in)) == -1) {
 		shutdown(server->fd_srv, 2);
 		if (close(server->fd_srv) == -1)

@@ -11,26 +11,30 @@ CC	= gcc
 
 RM	= rm -f
 
-SRCS	= 	serveur/main.c \
-		serveur/handle_client.c \
-		serveur/str_to_word_tab.c \
-		serveur/do_client.c \
-		serveur/get_next_line.c \
-		serveur/simple_command.c \
-		serveur/simple_command2.c \
-		serveur/dir_command.c \
-		serveur/pasv_mod.c \
-		serveur/list.c
+SRCS	=	./serveur/dir_command.c \
+		./serveur/do_client.c \
+		./serveur/get_next_line.c \
+		./serveur/handle_client.c \
+		./serveur/list.c \
+		./serveur/main.c \
+		./serveur/pasv_mod.c \
+		./serveur/retr.c \
+		./serveur/simple_command.c \
+		./serveur/simple_command2.c \
+		./serveur/str_to_word_tab.c \
+		./serveur/stor.c \
+		./serveur/port.c \
+		./serveur/utils_port.c
 
 OBJS	= $(SRCS:.c=.o)
 
 CFLAGS = -I ./include/
-CFLAGS += -W -Wall -Wextra -g3 -Werror
+CFLAGS += -Wall -Wextra
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	 $(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
+	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
 
 clean:
 	$(RM) $(OBJS)
