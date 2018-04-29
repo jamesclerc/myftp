@@ -9,7 +9,7 @@
 
 void function(char **tab, t_client *clt, int i)
 {
-	static const void (*function[14])(char **tab, t_client *clt) =
+	static void (*function[14])(char **tab, t_client *clt) =
 		{&user, &pass, &quit, &cwd, &cdup, &pwd, &delet, \
 		&help, &noop, &pasv, &list, &retr, &stor, &port};
 

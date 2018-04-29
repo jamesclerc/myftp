@@ -29,7 +29,7 @@ SRCS	=	./serveur/dir_command.c \
 OBJS	= $(SRCS:.c=.o)
 
 CFLAGS = -I ./include/
-CFLAGS += -Wall -Wextra
+CFLAGS += -Wall -Wextra -Werror
 
 all: $(NAME)
 
